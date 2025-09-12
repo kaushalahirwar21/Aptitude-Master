@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aptitude Master</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--accent-2:#10b981;--muted:#94a3b8;--glass: rgba(255,255,255,0.04)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#e6eef8;background:linear-gradient(180deg,#041022 0%, #071428 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .wrap{width:100%;max-width:980px}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    .logo{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px;border-radius:10px;box-shadow:0 6px 18px rgba(6,182,212,0.12);}
+    .logo h1{margin:0;font-size:18px;letter-spacing:0.4px}
+    .meta{margin-left:auto;text-align:right;color:var(--muted);font-size:13px}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+
+    .topbar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .progress{flex:1;background:var(--glass);height:10px;border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%}
+    .timer{min-width:110px;text-align:right;font-weight:600}
+
+    .question-area{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    @media (max-width:880px){.question-area{grid-template-columns:1fr} .sidebar{order:2}}
+
+    .q{padding:14px;background:transparent;border-radius:10px}
+    .q h2{margin:0 0 8px 0;font-size:18px}
+    .q p{margin:6px 0;color:var(--muted)}
+
+    .choices{display:grid;gap:10px;margin-top:10px}
+    .choice{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);cursor:pointer;transition:all .18s}
+    .choice:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(2,6,23,0.45)}
+    .choice.selected{outline:2px solid rgba(16,185,129,0.12);background:linear-gradient(90deg, rgba(16,185,129,0.06), rgba(6,182,212,0.03))}
+
+    .sidebar{padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;height:100%}
+    .controls{display:flex;gap:8px;margin-top:12px}
+    button{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021121}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .btn-accent{background:var(--accent-2);color:white}
+
+    .pill{display:inline-block;padding:6px 8px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);background:rgba(255,255,255,0.01);color:var(--muted);font-size:13px}
+
+    .question-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .qnav{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .qnav.done{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021121}
+
+    .footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+
+    /* result modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px}
+    .modal.show{display:flex}
+    .modal .box{width:100%;max-width:780px;background:linear-gradient(180deg,#081226,#021022);padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
+
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:640px){.result-grid{grid-template-columns:1fr}}
+
+    .small{font-size:13px;color:var(--muted)}
+
+    /* little animations */
+    .fade{animation:fadein .28s ease}
+    @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    footer.credit{text-align:center;color:var(--muted);margin-top:12px;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo"><h1>Aptitude Master</h1></div>
+      <div class="meta">
+        
+      <!-- About Us Button -->
+<a href="about.html" class="btn-about">About Us</a>
+
+<style>
+.btn-about {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-left: 16px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #06b6d4, #10b981);
+  color: #021121;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(6,182,212,0.3);
+  transition: all 0.25s ease;
+}
+
+.btn-about:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(6,182,212,0.45);
+  background: linear-gradient(90deg, #10b981, #06b6d4);
+}
+</style>
+
+
+    </header>
+
+    <main class="card" id="app">
+      <div class="topbar">
+        <div class="pill">Category: <strong id="category">General</strong></div>
+        <div class="progress" title="Progress"><i id="progbar"></i></div>
+        <div class="timer" id="timer">00:00</div>
+      </div>
+
+      <div class="question-area">
+        <section class="q" id="questionCard">
+          <h2 id="qtitle">Loading...</h2>
+          <p id="qdesc" class="small">&nbsp;</p>
+
+          <div id="qbody"></div>
+
+          <div class="controls">
+            <button class="btn-ghost" id="prevBtn">Previous</button>
+            <button class="btn-ghost" id="nextBtn">Next</button>
+            <button class="btn-primary" id="submitBtn">Submit Quiz</button>
+            <button class="btn-accent" id="restartBtn">Restart Quiz</button>
+
+            <div style="flex:1"></div>
+            <div class="small">Questions <b id="qidx">0</b>/<span id="qcount">0</span></div>
+          </div>
+        </section>
+
+        <aside class="sidebar">
+          <div><strong>Quick stats</strong></div>
+          <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+            <div class="pill">Score: <span id="score">0</span></div>
+            <div class="pill">Answered: <span id="answered">0</span></div>
+          </div>
+
+          <div style="margin-top:12px"><strong>Questions</strong></div>
+          <div class="question-nav" id="qnav"></div>
+
+          <div style="margin-top:12px"><strong>Options</strong></div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <button class="btn-ghost" id="shuffleBtn">Shuffle Questions</button>
+            <button class="btn-ghost" id="toggleTimerBtn">Pause Timer</button>
+            <button class="btn-accent" id="reviewBtn">Review Answers</button>
+          </div>
+
+          <div style="margin-top:12px;font-size:13px;color:var(--muted)">High score saved locally.</div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <div class="small">Tip: You can change answers before submitting. </div>
+        <div><small class="small">Built by Kaushal Singh Ahirwar</small></div>
+      </div>
+    </main>
+
+    <div class="modal" id="resultModal">
+      <div class="box fade">
+        <h2 id="resTitle">Your Result</h2>
+        <div class="result-grid">
+          <div>
+            <p class="small">Score: <strong id="resScore">0</strong> / <span id="resTotal">0</span></p>
+            <p class="small">Correct: <span id="resCorrect">0</span></p>
+            <p class="small">Wrong/Unattempted: <span id="resWrong">0</span></p>
+            <p class="small">Time Taken: <span id="resTime">00:00</span></p>
+
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn-primary" id="closeRes">Close</button>
+              <button class="btn-ghost" id="reviewAnswersBtn">Review Answers</button>
+            </div>
+          </div>
+          <div>
+            <div class="small">High Scores (local)</div>
+            <ol id="highscores"></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="credit">Thankyou For Choosing Us ❤️.</footer>
+    <footer>
+      &copy; 2025 Aptitude Master. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // ========= Sample question bank with variety ==========
+    const QUESTIONS = [
+      // Single choice (MCQ)
+      {id:1,type:'single',category:'Logical',q:'Which number replaces the question mark? 2, 6, 12, 20, ? (sequence of n*(n+1))',choices:['30','30','30','30'],answer:30,explain:'The sequence is n*(n+1): 1*2=2,2*3=6,3*4=12,4*5=20,5*6=30'},
+      {id:2,type:'single',category:'Quant',q:'A train covers a distance of 120 km in 1.5 hours. What is its speed in km/h?',choices:['80','70','90','100'],answer:'80',explain:'Speed = distance / time = 120/1.5 = 80 km/h'},
+      // Multiple correct
+      {id:3,type:'multi',category:'Verbal',q:'Select all words that are antonyms of "abundant".',choices:['Scarce','Plentiful','Meagre','Bountiful'],answer:['Scarce','Meagre'],explain:'Antonyms are scarce and meagre.'},
+      // True/False
+      {id:4,type:'tf',category:'Logical',q:'Zero is an even number. True or False?',answer:true,explain:'Zero is divisible by 2, therefore even.'},
+      // Numeric input
+      {id:5,type:'numeric',category:'Quant',q:'If x + 1/x = 5, find x^2 + 1/x^2.',answer:23,explain:'x^2 + 1/x^2 = (x+1/x)^2 - 2 = 25 - 2 = 23'},
+      // Short answer (case-insensitive)
+      {id:6,type:'short',category:'General',q:'Name the company which created the JavaScript language.',answer:'Netscape',explain:'Brendan Eich wrote JavaScript at Netscape.'},
+      // Ordering (small)
+      {id:7,type:'order',category:'Logical',q:'Arrange numbers in increasing order: 17, 3, 9, 12',choices:['3','9','12','17'],answer:['3','9','12','17'],explain:'Simple numeric ordering.'},
+      // Combination puzzle
+      {id:8,type:'single',category:'Logical',q:'If 3 apples + 2 bananas = 16 and 1 apple + 3 bananas = 11, what is the value of an apple?',choices:['2','5','3','4'],answer:'3',explain:'Solve linear equations: a=3.'},
+      // Another numeric
+      {id:9,type:'numeric',category:'Quant',q:'What is the LCM of 12 and 18?',answer:36,explain:'Prime factors: 12=2^2*3, 18=2*3^2 -> LCM=2^2*3^2=36'},
+      // A bit tougher reasoning
+      {id:10,type:'single',category:'Logical',q:'Find the odd one out: 135, 342, 216, 512, 728',choices:['135','342','216','512','728'],answer:'512',explain:'512 is a power of 2 (2^9); others aren\'t similar pattern.'},
+
+  // 11–20
+  {id:11, type:'single', category:'Logical', q:'Which number comes next: 2, 4, 8, 16, ?', choices:['20','24','32','36'], answer:'32', explain:'Series doubles each time'},
+  {id:12, type:'numeric', category:'Quant', q:'Find 15% of 200', answer:30, explain:'15/100*200 = 30'},
+  {id:13, type:'multi', category:'Verbal', q:'Select all antonyms of "happy"', choices:['sad','joyful','miserable','glad'], answer:['sad','miserable'], explain:'Antonyms are sad and miserable'},
+  {id:14, type:'tf', category:'General', q:'Water boils at 100°C at sea level. True or False?', answer:true, explain:'At sea level, water boils at 100°C'},
+  {id:15, type:'short', category:'General', q:'Who invented the telephone?', answer:'Alexander Graham Bell', explain:'Bell invented the telephone in 1876'},
+  {id:16, type:'order', category:'Logical', q:'Arrange in ascending order: 12, 7, 19, 3', choices:['12','7','19','3'], answer:['3','7','12','19'], explain:'Arrange smallest to largest'},
+  {id:17, type:'single', category:'Quant', q:'What is 9*7?', choices:['56','63','72','66'], answer:'63', explain:'9*7=63'},
+  {id:18, type:'multi', category:'Logical', q:'Select all prime numbers', choices:['2','3','4','5','6'], answer:['2','3','5'], explain:'Primes are 2,3,5'},
+  {id:19, type:'tf', category:'Verbal', q:'The word "benevolent" means kind. True or False?', answer:true, explain:'Benevolent = kind-hearted'},
+  {id:20, type:'numeric', category:'Quant', q:'LCM of 8 and 12?', answer:24, explain:'LCM = 24'},
+
+  // 21–30
+  {id:21, type:'single', category:'Logical', q:'Find the odd one out: 2, 4, 6, 9, 10', choices:['2','4','6','9','10'], answer:'9', explain:'All even except 9'},
+  {id:22, type:'short', category:'General', q:'Capital of Japan?', answer:'Tokyo', explain:'Tokyo is the capital'},
+  {id:23, type:'single', category:'Quant', q:'What is 45 ÷ 5?', choices:['8','9','7','6'], answer:'9', explain:'45/5=9'},
+  {id:24, type:'multi', category:'Verbal', q:'Select synonyms of "quick"', choices:['fast','slow','rapid','sluggish'], answer:['fast','rapid'], explain:'Synonyms: fast, rapid'},
+  {id:25, type:'tf', category:'Logical', q:'0 is a positive number. True or False?', answer:false, explain:'0 is neither positive nor negative'},
+  {id:26, type:'order', category:'Quant', q:'Arrange: 21, 14, 7, 28', choices:['21','14','7','28'], answer:['7','14','21','28'], explain:'Ascending order'},
+  {id:27, type:'single', category:'Logical', q:'Next in series: 5, 10, 20, 40, ?', choices:['50','60','80','100'], answer:'80', explain:'Each number doubles'},
+  {id:28, type:'numeric', category:'Quant', q:'Square of 12?', answer:144, explain:'12*12=144'},
+  {id:29, type:'multi', category:'Verbal', q:'Select all nouns', choices:['run','table','apple','happy'], answer:['table','apple'], explain:'Nouns: table, apple'},
+  {id:30, type:'tf', category:'General', q:'The sun rises in the west. True or False?', answer:false, explain:'Sun rises in the east'},
+
+  // 31–40
+  {id:31, type:'single', category:'Logical', q:'Find odd one: 11, 13, 17, 20, 19', choices:['11','13','17','20','19'], answer:'20', explain:'All are prime except 20'},
+  {id:32, type:'numeric', category:'Quant', q:'Cube of 3?', answer:27, explain:'3*3*3=27'},
+  {id:33, type:'single', category:'Verbal', q:'Synonym of "begin"', choices:['start','end','stop','finish'], answer:'start', explain:'Begin = start'},
+  {id:34, type:'multi', category:'Logical', q:'Select even numbers', choices:['1','2','3','4','5'], answer:['2','4'], explain:'Even numbers: 2,4'},
+  {id:35, type:'tf', category:'General', q:'Earth revolves around the Sun. True or False?', answer:true, explain:'Earth revolves around Sun'},
+  {id:36, type:'short', category:'General', q:'Largest ocean?', answer:'Pacific', explain:'Pacific is largest'},
+  {id:37, type:'single', category:'Quant', q:'50% of 200?', choices:['50','100','150','200'], answer:'100', explain:'50% of 200=100'},
+  {id:38, type:'order', category:'Logical', q:'Arrange: 9, 3, 6, 12', choices:['9','3','6','12'], answer:['3','6','9','12'], explain:'Ascending order'},
+  {id:39, type:'multi', category:'Verbal', q:'Select adjectives', choices:['happy','run','fast','apple'], answer:['happy','fast'], explain:'Adjectives: happy, fast'},
+  {id:40, type:'tf', category:'General', q:'Water freezes at 0°C. True or False?', answer:true, explain:'Freezes at 0°C'},
+
+  // 41–50
+  {id:41, type:'single', category:'Logical', q:'Next in series: 1, 1, 2, 3, 5, ?', choices:['6','7','8','9'], answer:'8', explain:'Fibonacci series'},
+  {id:42, type:'numeric', category:'Quant', q:'20% of 250?', answer:50, explain:'20/100*250=50'},
+  {id:43, type:'multi', category:'Verbal', q:'Select all verbs', choices:['run','apple','sleep','happy'], answer:['run','sleep'], explain:'Verbs: run, sleep'},
+  {id:44, type:'tf', category:'Logical', q:'2 is a prime number. True or False?', answer:true, explain:'2 is prime'},
+  {id:45, type:'short', category:'General', q:'Chemical symbol for water?', answer:'H2O', explain:'H2O'},
+  {id:46, type:'order', category:'Quant', q:'Arrange: 50, 20, 70, 10', choices:['50','20','70','10'], answer:['10','20','50','70'], explain:'Ascending order'},
+  {id:47, type:'single', category:'Logical', q:'Odd one out: 3, 6, 9, 11, 12', choices:['3','6','9','11','12'], answer:'11', explain:'All divisible by 3 except 11'},
+  {id:48, type:'numeric', category:'Quant', q:'Square root of 225?', answer:15, explain:'15*15=225'},
+  {id:49, type:'multi', category:'Verbal', q:'Select synonyms of "happy"', choices:['joyful','sad','cheerful','angry'], answer:['joyful','cheerful'], explain:'Synonyms: joyful, cheerful'},
+  {id:50, type:'tf', category:'General', q:'The sky is blue. True or False?', answer:true, explain:'Sky appears blue due to scattering'},
+  // 51–100: Additional 50 questions (distinct from first 50)
+
+  {id:51,type:'single',category:'Logical',q:'If Monday is coded as 12345, how is Friday coded?',choices:['54678','65487','54321','57684'],answer:'54321',explain:'Pattern based on position of letters'},
+  {id:52,type:'numeric',category:'Quant',q:'Find the square root of 169',answer:13,explain:'√169 = 13'},
+  {id:53,type:'multi',category:'Verbal',q:'Select all synonyms of "angry"',choices:['furious','happy','irate','joyful'],answer:['furious','irate'],explain:'Synonyms are furious and irate'},
+  {id:54,type:'tf',category:'General',q:'The Great Wall of China is visible from the Moon. True or False?',answer:false,explain:'It is a myth; not visible from Moon'},
+  {id:55,type:'short',category:'General',q:'Name the author of "Harry Potter"',answer:'J.K. Rowling',explain:'Author of Harry Potter series is J.K. Rowling'},
+  {id:56,type:'order',category:'Logical',q:'Arrange: 5, 2, 9, 1',choices:['5','2','9','1'],answer:['1','2','5','9'],explain:'Ascending order'},
+  {id:57,type:'single',category:'Quant',q:'What is 25% of 200?',choices:['25','50','75','100'],answer:'50',explain:'25% of 200 = 50'},
+  {id:58,type:'multi',category:'Verbal',q:'Select all antonyms of "cold"',choices:['hot','warm','cool','chilly'],answer:['hot','warm'],explain:'Antonyms are hot and warm'},
+  {id:59,type:'tf',category:'Logical',q:'All squares are rectangles. True or False?',answer:true,explain:'Every square is a rectangle'},
+  {id:60,type:'numeric',category:'Quant',q:'LCM of 6 and 8?',answer:24,explain:'LCM = 24'},
+
+  {id:61,type:'single',category:'Logical',q:'Find next in series: 3, 6, 12, 24, ?',choices:['30','36','48','50'],answer:'48',explain:'Each number doubles'},
+  {id:62,type:'numeric',category:'Quant',q:'Cube of 5?',answer:125,explain:'5*5*5 = 125'},
+  {id:63,type:'multi',category:'Verbal',q:'Select all verbs',choices:['run','jump','red','happy'],answer:['run','jump'],explain:'Verbs are run and jump'},
+  {id:64,type:'tf',category:'General',q:'Lightning never strikes the same place twice. True or False?',answer:false,explain:'Lightning can strike multiple times'},
+  {id:65,type:'short',category:'General',q:'Capital of Canada?',answer:'Ottawa',explain:'Capital city of Canada is Ottawa'},
+  {id:66,type:'order',category:'Logical',q:'Arrange: 14, 7, 21, 3',choices:['14','7','21','3'],answer:['3','7','14','21'],explain:'Ascending order'},
+  {id:67,type:'single',category:'Quant',q:'What is 15*12?',choices:['180','150','200','175'],answer:'180',explain:'15*12=180'},
+  {id:68,type:'multi',category:'Logical',q:'Select all prime numbers',choices:['7','9','11','15'],answer:['7','11'],explain:'Primes are 7 and 11'},
+  {id:69,type:'tf',category:'Verbal',q:'The word "optimistic" means hopeful. True or False?',answer:true,explain:'Optimistic means hopeful'},
+  {id:70,type:'numeric',category:'Quant',q:'Find 10% of 450',answer:45,explain:'10% of 450 = 45'},
+
+  {id:71,type:'single',category:'Logical',q:'Odd one out: 21, 33, 45, 50',choices:['21','33','45','50'],answer:'50',explain:'50 is not multiple of 3'},
+  {id:72,type:'numeric',category:'Quant',q:'Square of 18?',answer:324,explain:'18*18 = 324'},
+  {id:73,type:'multi',category:'Verbal',q:'Select all adjectives',choices:['fast','run','slow','apple'],answer:['fast','slow'],explain:'Adjectives: fast, slow'},
+  {id:74,type:'tf',category:'General',q:'Venus is the hottest planet. True or False?',answer:true,explain:'Due to greenhouse effect, Venus is hottest'},
+  {id:75,type:'short',category:'General',q:'Who painted Mona Lisa?',answer:'Leonardo da Vinci',explain:'Mona Lisa by Leonardo da Vinci'},
+  {id:76,type:'order',category:'Logical',q:'Arrange: 4, 12, 7, 9',choices:['4','12','7','9'],answer:['4','7','9','12'],explain:'Ascending order'},
+  {id:77,type:'single',category:'Quant',q:'What is 7*8?',choices:['54','56','58','60'],answer:'56',explain:'7*8=56'},
+  {id:78,type:'multi',category:'Logical',q:'Select numbers divisible by 5',choices:['10','12','15','18'],answer:['10','15'],explain:'Divisible by 5: 10,15'},
+  {id:79,type:'tf',category:'Verbal',q:'Synonyms of "angry" include "mad". True or False?',answer:true,explain:'Mad is synonym of angry'},
+  {id:80,type:'numeric',category:'Quant',q:'LCM of 9 and 12?',answer:36,explain:'LCM=36'},
+
+  {id:81,type:'single',category:'Logical',q:'Next in series: 5, 10, 15, 20, ?',choices:['24','25','30','22'],answer:'25',explain:'Add 5 each time'},
+  {id:82,type:'numeric',category:'Quant',q:'Cube root of 64?',answer:4,explain:'4*4*4 = 64'},
+  {id:83,type:'multi',category:'Verbal',q:'Select antonyms of "bright"',choices:['dull','shiny','dim','light'],answer:['dull','dim'],explain:'Antonyms: dull, dim'},
+  {id:84,type:'tf',category:'General',q:'Sound travels faster in air than in water. True or False?',answer:false,explain:'Sound travels faster in water than air'},
+  {id:85,type:'short',category:'General',q:'Largest planet in Solar System?',answer:'Jupiter',explain:'Jupiter is largest'},
+  {id:86,type:'order',category:'Logical',q:'Arrange: 20, 5, 15, 10',choices:['20','5','15','10'],answer:['5','10','15','20'],explain:'Ascending order'},
+  {id:87,type:'single',category:'Quant',q:'50*4?',choices:['200','100','150','250'],answer:'200',explain:'50*4=200'},
+  {id:88,type:'multi',category:'Logical',q:'Select even numbers',choices:['11','12','13','14'],answer:['12','14'],explain:'Even numbers: 12,14'},
+  {id:89,type:'tf',category:'Verbal',q:'The word "benevolent" means kind. True or False?',answer:true,explain:'Benevolent = kind'},
+  {id:90,type:'numeric',category:'Quant',q:'Find 5% of 500',answer:25,explain:'5% of 500 = 25'},
+
+  {id:91,type:'single',category:'Logical',q:'Odd one out: 100, 121, 144, 150',choices:['100','121','144','150'],answer:'150',explain:'All perfect squares except 150'},
+  {id:92,type:'numeric',category:'Quant',q:'Square of 14?',answer:196,explain:'14*14 = 196'},
+  {id:93,type:'multi',category:'Verbal',q:'Select synonyms of "quick"',choices:['fast','slow','rapid','lazy'],answer:['fast','rapid'],explain:'Synonyms: fast, rapid'},
+  {id:94,type:'tf',category:'General',q:'The Earth is flat. True or False?',answer:false,explain:'Earth is round'},
+  {id:95,type:'short',category:'General',q:'Who discovered penicillin?',answer:'Alexander Fleming',explain:'Fleming discovered penicillin'},
+  {id:96,type:'order',category:'Logical',q:'Arrange: 8, 2, 6, 4',choices:['8','2','6','4'],answer:['2','4','6','8'],explain:'Ascending order'},
+  {id:97,type:'single',category:'Quant',q:'9*9?',choices:['81','72','79','90'],answer:'81',explain:'9*9=81'},
+  {id:98,type:'multi',category:'Logical',q:'Select multiples of 3',choices:['4','6','7','9'],answer:['6','9'],explain:'Multiples of 3: 6,9'},
+  {id:99,type:'tf',category:'Verbal',q:'Synonyms of "happy" include "joyful". True or False?',answer:true,explain:'Joyful = happy'},
+  {id:100,type:'numeric',category:'Quant',q:'LCM of 15 and 20?',answer:60,explain:'LCM=60'},
+
+];
+
+    // ======= App state ========
+    let state = {questions:[],current:0,answers:{},startTime:null,timerInterval:null,timePaused:false,elapsed:0};
+
+    // utility
+    const el = id=>document.getElementById(id);
+
+    function init(){
+  // deep copy the full question bank
+  const allQs = QUESTIONS.map(q => JSON.parse(JSON.stringify(q)));
+
+  // shuffle full array
+  shuffle(allQs);
+
+  // pick first 10 questions only
+  state.questions = allQs.slice(0, 10);
+
+  renderQuestionNav();
+  state.startTime = Date.now();
+  startTimer();
+  render();
+}
+
+// ===== Reset / Restart quiz =====
+function resetQuiz() {
+    state.answers = {};
+    state.current = 0;
+    state.elapsed = 0;
+    state.startTime = Date.now();
+    state.timePaused = false;
+    state.reviewMode = false;
+
+    // shuffle full questions array और pick first 10 randomly
+    const allQs = QUESTIONS.map(q => JSON.parse(JSON.stringify(q)));
+    shuffle(allQs);
+    state.questions = allQs.slice(0, 10);
+
+    renderQuestionNav();
+    render();
+    startTimer();
+}
+
+
+
+    function shuffle(arr){
+      for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
+    }
+
+    function renderQuestionNav(){
+      const qnav = el('qnav'); qnav.innerHTML='';
+      state.questions.forEach((q,i)=>{
+        const node = document.createElement('div'); node.className='qnav'; node.textContent=i+1;
+        if(state.answers[q.id]!==undefined) node.classList.add('done');
+        node.addEventListener('click',()=>{state.current=i; render();});
+        qnav.appendChild(node);
+      });
+      el('qcount').textContent=state.questions.length;
+    }
+
+    function render(){
+      const q = state.questions[state.current];
+      el('qtitle').textContent = `Q${state.current+1}. ${q.q}`;
+      el('qdesc').textContent = `Type: ${q.type.toUpperCase()} • Category: ${q.category}`;
+      el('category').textContent = q.category;
+      el('qidx').textContent = state.current+1;
+
+      // progress bar
+      const pct = Math.round(((state.current)/(state.questions.length-1))*100);
+      el('progbar').style.width = pct + '%';
+
+      const qbody = el('qbody'); qbody.innerHTML='';
+
+      if(q.type==='single' || q.type==='multi'){
+        const choices = document.createElement('div'); choices.className='choices';
+        q.choices.forEach((c,ci)=>{
+          const ch = document.createElement('div'); ch.className='choice'; ch.dataset.value=c; ch.tabIndex=0; ch.innerHTML = `<div>${c}</div>`;
+          // select state
+          if(Array.isArray(state.answers[q.id]) && state.answers[q.id].includes(c)) ch.classList.add('selected');
+          if(state.answers[q.id]===c) ch.classList.add('selected');
+          ch.addEventListener('click',()=>{
+            if(q.type==='single') state.answers[q.id] = c;
+            else{
+              state.answers[q.id] = state.answers[q.id] || [];
+              const idx = state.answers[q.id].indexOf(c);
+              if(idx>-1) state.answers[q.id].splice(idx,1); else state.answers[q.id].push(c);
+            }
+            renderQuestionNav(); render(); updateStats();
+          });
+          choices.appendChild(ch);
+        });
+        qbody.appendChild(choices);
+      }
+
+      else if(q.type==='tf'){
+        const choices = document.createElement('div'); choices.className='choices';
+        ['True','False'].forEach(t=>{const ch=document.createElement('div');ch.className='choice';ch.textContent=t; if(state.answers[q.id]=== (t==='True')) ch.classList.add('selected'); ch.addEventListener('click',()=>{state.answers[q.id]=(t==='True'); renderQuestionNav(); render(); updateStats();}); choices.appendChild(ch);});
+        qbody.appendChild(choices);
+      }
+
+      else if(q.type==='numeric' || q.type==='short'){
+        const wrap = document.createElement('div'); wrap.style.marginTop='12px';
+        const inp = document.createElement('input'); inp.type='text'; inp.placeholder='Type your answer here'; inp.style.width='100%'; inp.style.padding='10px'; inp.style.borderRadius='8px'; inp.style.border='1px solid rgba(255,255,255,0.03)'; if(state.answers[q.id]!==undefined) inp.value = state.answers[q.id];
+        inp.addEventListener('input',e=>{state.answers[q.id]=e.target.value; renderQuestionNav(); updateStats();});
+        wrap.appendChild(inp);
+        qbody.appendChild(wrap);
+      }
+
+      else if(q.type==='order'){
+        const list = document.createElement('ol'); list.style.padding='12px'; list.style.background='rgba(255,255,255,0.02)'; list.style.borderRadius='8px';
+        const order = state.answers[q.id] || q.choices.slice();
+        order.forEach((item,idx)=>{
+          const li=document.createElement('li'); li.style.padding='8px'; li.style.marginBottom='6px'; li.style.cursor='pointer'; li.style.border='1px solid rgba(255,255,255,0.03)'; li.textContent=item;
+          // up/down controls
+          const controls=document.createElement('div'); controls.style.float='right'; controls.innerHTML=`<button title='Up' style='margin-right:6px' data-action='up'>▲</button><button title='Down' data-action='down'>▼</button>`;
+          li.appendChild(controls);
+          controls.querySelectorAll('button').forEach(btn=>{btn.addEventListener('click',()=>{const action=btn.dataset.action; if(action==='up' && idx>0){[order[idx-1],order[idx]]=[order[idx],order[idx-1]];} if(action==='down' && idx<order.length-1){[order[idx+1],order[idx]]=[order[idx],order[idx+1]];} state.answers[q.id]=order; render(); renderQuestionNav(); updateStats();});});
+          list.appendChild(li);
+        });
+        qbody.appendChild(list);
+      }
+
+      // explanation (only in review mode)
+      if(state.reviewMode){
+        const expl = document.createElement('div'); expl.style.marginTop='12px'; expl.innerHTML = `<div class='small'>Answer: <strong>${formatAnswer(q.answer)}</strong></div><div class='small' style='margin-top:6px'>Explanation: ${q.explain||'—'}</div>`;
+        qbody.appendChild(expl);
+      }
+
+      updateStats();
+    }
+
+    function formatAnswer(ans){ if(Array.isArray(ans)) return ans.join(', '); return ans; }
+
+    function updateStats(){
+      const answered = Object.keys(state.answers).length;
+      el('answered').textContent = answered;
+      el('score').textContent = calcScore().score;
+      // update nav markers
+      const nodes = document.querySelectorAll('.qnav'); nodes.forEach((n,i)=>{const q=state.questions[i]; if(state.answers[q.id]!==undefined) n.classList.add('done'); else n.classList.remove('done');});
+    }
+
+    function calcScore(){
+      let score=0; let correct=0; let wrong=0; state.questions.forEach(q=>{
+        const user = state.answers[q.id];
+        if(user===undefined){wrong++; return}
+        if(q.type==='single' || q.type==='numeric' || q.type==='short' || q.type==='tf' || q.type==='order'){
+          let pass=false;
+          if(q.type==='single') pass = (String(user).trim()==String(q.answer).trim());
+          else if(q.type==='numeric') pass = Math.abs(Number(user)-Number(q.answer)) < 0.001;
+          else if(q.type==='short') pass = String(user).trim().toLowerCase()===String(q.answer).trim().toLowerCase();
+          else if(q.type==='tf') pass = Boolean(user)===Boolean(q.answer);
+          else if(q.type==='order') pass = JSON.stringify(user)===JSON.stringify(q.answer);
+          if(pass){score+=1; correct++;} else {wrong++;}
+        }
+        else if(q.type==='multi'){
+          const correctSet = (q.answer||[]).slice().sort().join('|'); const userSet = (user||[]).slice().sort().join('|'); if(userSet===correctSet){score+=1; correct++;} else wrong++;
+        }
+      });
+      return {score,correct,wrong};
+    }
+
+    // ===== Timer =====
+    function startTimer(){
+      state.timerInterval = setInterval(()=>{
+        if(state.timePaused) return; state.elapsed = Math.floor((Date.now()-state.startTime)/1000);
+        el('timer').textContent = formatTime(state.elapsed);
+      },500);
+    }
+    function formatTime(s){ const mm = String(Math.floor(s/60)).padStart(2,'0'); const ss = String(s%60).padStart(2,'0'); return `${mm}:${ss}` }
+
+    // ===== Controls =====
+    document.getElementById('prevBtn').addEventListener('click',()=>{if(state.current>0) state.current--; render();});
+    document.getElementById('nextBtn').addEventListener('click',()=>{if(state.current<state.questions.length-1) state.current++; render();});
+    document.getElementById('shuffleBtn').addEventListener('click',()=>{shuffle(state.questions); state.current=0; renderQuestionNav(); render();});
+    document.getElementById('toggleTimerBtn').addEventListener('click',()=>{state.timePaused = !state.timePaused; document.getElementById('toggleTimerBtn').textContent = state.timePaused? 'Resume Timer' : 'Pause Timer';});
+
+    document.getElementById('submitBtn').addEventListener('click',submitQuiz);
+    document.getElementById('closeRes').addEventListener('click',()=>{el('resultModal').classList.remove('show'); state.reviewMode=false; render();});
+    document.getElementById('reviewBtn').addEventListener('click',()=>{state.reviewMode=true; render(); window.scrollTo({top:0,behavior:'smooth'})});
+    document.getElementById('reviewAnswersBtn').addEventListener('click',()=>{state.reviewMode=true; el('resultModal').classList.remove('show'); render();});
+    document.getElementById('restartBtn').addEventListener('click', resetQuiz);
+
+
+    function submitQuiz(){
+      const r = calcScore();
+      const total = state.questions.length; const timeTaken = formatTime(state.elapsed);
+      el('resScore').textContent = r.score; el('resTotal').textContent = total; el('resCorrect').textContent = r.correct; el('resWrong').textContent = r.wrong; el('resTime').textContent = timeTaken; el('resTitle').textContent = `You scored ${r.score} / ${total}`;
+      saveHighscore({score:r.score,total,time:state.elapsed,date:new Date().toLocaleString()});
+      renderHighscores();
+      el('resultModal').classList.add('show');
+      state.reviewMode = false;
+    }
+
+    // ===== Highscore (localStorage) =====
+    function saveHighscore(entry){ try{ const raw = localStorage.getItem('apti_high')||'[]'; const arr = JSON.parse(raw); arr.push(entry); arr.sort((a,b)=>b.score-a.score || a.time-b.time); if(arr.length>5) arr.length=5; localStorage.setItem('apti_high', JSON.stringify(arr)); }catch(e){console.warn(e);} }
+    function renderHighscores(){ const list = el('highscores'); list.innerHTML=''; try{ const arr = JSON.parse(localStorage.getItem('apti_high')||'[]'); if(arr.length===0){list.innerHTML='<li class="small">No records yet</li>'; return} arr.forEach(it=>{const li=document.createElement('li'); li.innerHTML = `<strong>${it.score}/${it.total}</strong> — <span class='small'>${it.date} • ${formatTime(it.time)}</span>`; list.appendChild(li);}); }catch(e){list.innerHTML='<li class="small">No records yet</li>'}}
+
+    // ========= small helpers =========
+    window.addEventListener('keydown',(e)=>{ if(e.key==='ArrowRight'){ if(state.current<state.questions.length-1){state.current++; render();}} if(e.key==='ArrowLeft'){ if(state.current>0){state.current--; render();}} });
+
+    // initialise
+    init(); renderHighscores();
+
+   
+  // Automatically start proctoring when page loads
+  window.addEventListener('load', () => {
+      fetch("/start_proctoring")
+        .then(res => res.json())
+        .then(data => console.log(data.status));
+  });
+
+  </script>
+</body>
+</html>
