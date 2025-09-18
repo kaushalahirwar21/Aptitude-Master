@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aptitude Master</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo"><h1>Aptitude Master</h1></div>
+      <div class="meta">
+        <!-- About Us Button -->
+        <a href="about.html" class="btn-about">About Us</a>
+      </div>
+    </header>
+
+    <main class="card" id="app">
+      <div class="topbar">
+        <div class="pill">Category: <strong id="category">General</strong></div>
+        <div class="progress" title="Progress"><i id="progbar"></i></div>
+      </div>
+
+      <div class="question-area">
+        <section class="q" id="questionCard">
+          <h2 id="qtitle">Loading...</h2>
+          <p id="qdesc" class="small">&nbsp;</p>
+          <div id="qbody"></div>
+
+          <div class="controls">
+            <button class="btn-accent" id="prevBtn">Previous</button>
+            <button class="btn-accent" id="nextBtn">Next</button>
+            <button class="btn-accent" id="submitBtn">Submit Quiz</button>
+            <button class="btn-accent" id="restartBtn">Restart Quiz</button>
+
+            <div style="flex:1"></div>
+            <div class="small">Questions <b id="qidx">0</b>/<span id="qcount">0</span></div>
+          </div>
+        </section>
+
+        <aside class="sidebar">
+          <div><strong>Quick stats</strong></div>
+          <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+            <div class="pill">Score: <span id="score">0</span></div>
+            <div class="pill">Answered: <span id="answered">0</span></div>
+          </div>
+
+          <div style="margin-top:12px"><strong>Questions</strong></div>
+          <div class="question-nav" id="qnav"></div>
+
+          <div style="margin-top:12px"><strong>Options</strong></div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <button class="btn-ghost" id="shuffleBtn">Shuffle Questions</button>
+            <button class="btn-accent" id="reviewBtn">Review Answers</button>
+          </div>
+
+          <div style="margin-top:12px;font-size:13px;color:#94a3b8">High score saved locally.</div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <div class="small">Tip: You can change answers before submitting. </div>
+        <div><small class="small">Built by Kaushal Singh Ahirwar</small></div>
+      </div>
+    </main>
+
+    <div class="modal" id="resultModal">
+      <div class="box fade">
+        <h2 id="resTitle">Your Result</h2>
+        <div class="result-grid">
+          <div>
+            <p class="small">Score: <strong id="resScore">0</strong> / <span id="resTotal">0</span></p>
+            <p class="small">Correct: <span id="resCorrect">0</span></p>
+            <p class="small">Wrong/Unattempted: <span id="resWrong">0</span></p>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn-primary" id="closeRes">Close</button>
+              <button class="btn-ghost" id="reviewAnswersBtn">Review Answers</button>
+            </div>
+          </div>
+          <div>
+            <div class="small">High Scores (local)</div>
+            <ol id="highscores"></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="credit">Thankyou For Choosing Us ❤️.</footer>
+    <footer class="about-footer">
+      &copy; 2025 Aptitude Master. All rights reserved.
+    </footer>
+  </div>
+  <script src="question.js"></script>
+  <script src="script.js"></script>
+  
+
+
+</body>
+</html>
