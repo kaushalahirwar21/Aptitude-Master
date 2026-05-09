@@ -30,9 +30,8 @@
 1. **Clone the repository:**
 
 ```bash
+
 git clone https://github.com/yourusername/aptitude-master.git
 cd aptitude-master
-
-
 
 <img width="1797" height="856" alt="image" src="https://github.com/user-attachments/assets/faf58d68-ea54-4295-ad3c-342a6a378e0c" />
