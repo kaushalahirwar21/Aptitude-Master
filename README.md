@@ -25,6 +25,8 @@
 
 ---
 
+<img width="1797" height="856" alt="image" src="https://github.com/user-attachments/assets/59c98f44-c70b-415c-baa4-0bb8a909255a" />
+
 ## 🚀 Installation / Usage
 
 1. **Clone the repository:**
@@ -34,4 +36,3 @@
 git clone https://github.com/yourusername/aptitude-master.git
 cd aptitude-master
 
-<img width="1797" height="856" alt="image" src="https://github.com/user-attachments/assets/faf58d68-ea54-4295-ad3c-342a6a378e0c" />
